@@ -38,8 +38,8 @@ cp "$upstream_dir/main.js" "$upstream_dir/styles.css" "$upstream_dir/manifest.js
 patch --batch --forward -p1 -d "$output_dir" < "$script_dir/patches/main.js.patch"
 patch --batch --forward -p1 -d "$output_dir" < "$script_dir/patches/manifest.json.patch"
 
-check_sha "$output_dir/main.js" 0451d96fa87b4c26baa659decd7a8cb415c7304c275945d42a7e580aef877eca
+check_sha "$output_dir/main.js" c3216d2ac31de2ab3a2809101acd5b290c1439be07ab948a61b6384c3086134f
 check_sha "$output_dir/styles.css" 2230529cec2a25076007403d00dbc0657de4f9c47703a6dfebf2674c3787f229
-check_sha "$output_dir/manifest.json" b5a06b404d6e8ebd5bc1beb2aa9c00a552833a2d21543a5fe180733795a9ae61
+check_sha "$output_dir/manifest.json" 07dad116d05e16fd0fc4f0344deff58ea0e08d4cfd60d674f1e06aac3d71639f
 check_sha "$output_dir/LICENSE" 605e9047a563c5c8396ffb18232aa4304ec56586aee537c45064c6fb425e44ad
 printf '%s\n' 'Reconstruction verified: main.js, styles.css, manifest.json, LICENSE.'

@@ -4,13 +4,13 @@
 
 `UPSTREAM_SOURCE.md` locks the source to ShrekBytes Advanced PDF Export tag `4.7.7`, commit `3faf4baf56c7ba582290469cc475a385b6bc2ec9`. The clean `upstream/` archive includes the TypeScript source, package lockfile and `esbuild.config.mjs`. Upstream’s build entry point is `src/main.ts`; `npm run build` runs TypeScript checking and creates the production `main.js` bundle.
 
-The final tested revision was made by directly editing a candidate copy of the generated `main.js`. The full tested bundle is `../plugin/main.js`. The exact changes relative to the pinned upstream bundle are in `patches/main.js.patch`. `patches/manifest.json.patch` changes the plugin identity and description and adds the tested local revision. `styles.css` is unchanged.
+The final tested revision was made by directly editing a candidate copy of the generated `main.js`. The full tested bundle is `../plugin/main.js`. The exact changes relative to the pinned upstream bundle are in `patches/main.js.patch`. `patches/manifest.json.patch` sets the local plugin identity, description, and release version `4.7.8`, while retaining the tested localRevision `2026.10.25.19`. `styles.css` is unchanged.
 
 ## Deterministic package reconstruction
 
 From a clean copy of the candidate, run `source/rebuild.sh source/upstream <empty-output-directory>`. The script checks the locked source record and the SHA-256 of upstream `main.js`, `styles.css`, `manifest.json`, and `LICENSE`; it then copies the upstream bundle assets, applies both patches, and verifies all four output hashes. It requires no `.git` metadata, network access, npm install, vault, settings, or course files. Compare the output files with `plugin/` before using the candidate.
 
-This procedure reconstructs the tested release assets from the upstream published bundle plus the exact local bundle patch. It is not a byte-identical rebuild of the upstream bundle from TypeScript. For review packaging, the four files are placed under `jiawei-pdf-export/` in the single `jiawei-pdf-export-4.7.7.zip` asset.
+This procedure reconstructs the tested release assets from the upstream published bundle plus the exact local bundle patch. It is not a byte-identical rebuild of the upstream bundle from TypeScript. For release packaging, the four files are placed under `henluu-pdf-export/` in the single `henluu-pdf-export-4.7.8.zip` asset.
 
 ## Prepare and review a future code change
 
