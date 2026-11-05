@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Obsidian vault
+.obsidian/
+
+# Logs
+*.log
+
+# GitHub release body, written by the release workflow
+release-notes.md
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Plugin settings (when symlinked into a vault)
+data.json

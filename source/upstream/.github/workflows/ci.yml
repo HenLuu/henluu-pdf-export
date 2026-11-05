@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+  # The release notes are written from commit subjects, so a subject the
+  # generator cannot read is a change users are never told about. Runs on
+  # pull requests, where a failure can still be fixed before merging, and on
+  # pushes to main, where it cannot — the GitHub web editor commits straight to
+  # main, and those are exactly the subjects that go unread. On a push the
+  # check is a signal rather than a gate: the commit is already published, so
+  # this makes the problem visible instead of silent.
+  #
+  # Only the newly-pushed range is checked. History predating this job is out
+  # of scope and would fail on every run.
+  commits:
+    runs-on: ubuntu-latest
+    steps:
+      # Full history so both ends of the range below are present.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check commit messages
+        env:
+          RANGE: ${{ github.event_name == 'pull_request'
+            && format('{0}..HEAD', github.event.pull_request.base.sha)
+            || format('{0}..{1}', github.event.before, github.sha) }}
+        run: node scripts/check-commits.mjs "$RANGE"
